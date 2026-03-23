@@ -1,5 +1,5 @@
 function request() {
-    
+
   fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -10,7 +10,7 @@ function request() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "openai/gpt-5.2",
+      model: "stepfun/step-3.5-flash:free",
       messages: [
         {
           role: "user",
