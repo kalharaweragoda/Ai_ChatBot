@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JIAT Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+  <div class="w-full max-w-md bg-white shadow-lg rounded-lg flex flex-col">
+    <!-- Title -->
+    <div class="bg-blue-600 text-white text-center py-3 rounded-t-lg">
+      <h1 class="text-xl font-bold">JIAT Chatbot</h1>
+    </div>
+
+    <!-- Chat window -->
+    <div id="chat-window" class="flex-1 p-4 overflow-y-auto space-y-2">
+      <!-- Messages will appear here -->
+    </div>
+
+    <!-- Input area -->
+    <div class="flex items-center border-t p-3">
+      <input id="user-input" 
+             type="text" 
+             placeholder="Type your message..." 
+             class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+      <button id="send-btn" 
+              class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Send
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const chatWindow = document.getElementById("chat-window");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = sender === "user" 
+        ? "text-right" 
+        : "text-left";
+      msg.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}">${text}</span>`;
+      chatWindow.appendChild(msg);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function botReply(userText) {
+      // Simple bot logic
+      let reply = "Hello! I'm JIAT chatbot.";
+      if (userText.toLowerCase().includes("hi")) {
+        reply = "Hi there! How can I help you?";
+      } else if (userText.toLowerCase().includes("help")) {
+        reply = "Sure! Ask me anything.";
+      }
+      addMessage(reply, "bot");
+    }
+
+    sendBtn.addEventListener("click", () => {
+      const text = userInput.value.trim();
+      if (text) {
+        addMessage(text, "user");
+        userInput.value = "";
+        setTimeout(() => botReply(text), 500);
+      }
+    });
+
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendBtn.click();
+      }
+    });
+  </script>
+
+</body>
+</html>
